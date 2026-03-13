@@ -132,6 +132,7 @@ Customers whose last recorded order shows a long gap since their previous purcha
 Key findings from the analysis are documented in a separate insights file.
 
 Insights File: **insights.md**
+https://github.com/Gaurav-yadav-03/instacart-sql-analysis/blob/main/key_findings.md
 
 ---
 
