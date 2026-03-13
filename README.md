@@ -1,187 +1,161 @@
-# Instacart Customer Purchase Behavior Analysis (SQL Project)
+# Instacart Customer Behavior Analysis Using SQL
 
-## Project Overview
+## Overview
 
-This project analyzes the Instacart Market Basket dataset using SQL to understand customer purchasing behavior, product popularity, basket composition, and customer retention patterns.
+This project analyzes customer purchasing behavior using the Instacart grocery dataset.
+The analysis focuses on understanding order patterns, basket sizes, popular products, reorder behavior, and customer activity levels.
 
-The goal of this analysis is to uncover insights that can help an e-commerce grocery platform improve product recommendations, customer engagement, and retention strategies.
-
-The dataset contains millions of grocery orders placed by customers, allowing us to analyze patterns such as reorder behavior, frequently purchased product combinations, and customer activity trends.
-
----
-
-# Business Problem
-
-Online grocery platforms must understand customer purchasing patterns in order to:
-
-• Improve product recommendations
-• Optimize cross-selling opportunities
-• Identify loyal customers
-• Detect customers at risk of churn
-• Understand product demand trends
-
-This project explores these questions using SQL-based data analysis.
+Using SQL queries, different aspects of the dataset were explored to identify patterns in how customers interact with the platform.
 
 ---
 
-# Dataset
+# About Instacart
 
-The analysis uses the **Instacart Market Basket Analysis dataset**, which contains anonymized grocery order data.
+Instacart is an online grocery delivery and pick-up service that allows customers to order groceries from local stores through a mobile app or website.
 
-Dataset Source: Kaggle
+Customers can browse products, add items to their cart, and place orders that are fulfilled by personal shoppers. Understanding customer purchasing behavior helps platforms like Instacart improve product recommendations, inventory planning, and customer retention strategies.
+
+---
+
+# Database Description
+
+The dataset contains multiple tables that describe customer orders and products.
+
+Tables used in the analysis:
+
+| Table          | Description                                                                                |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| orders         | Contains order information including user ID, order number, day of week, and time of order |
+| order_products | Contains products included in each order                                                   |
+| products       | Contains product names                                                                     |
+| aisles         | Contains aisle categories                                                                  |
+| departments    | Contains department categories                                                             |
+
+### Dataset Size
+
+The dataset contains millions of grocery orders placed by customers along with the products included in each order.
+
+### Dataset Link
+
 Instacart Market Basket Analysis Dataset
-
-The dataset includes the following tables:
-
-| Table          | Description                                                                |
-| -------------- | -------------------------------------------------------------------------- |
-| orders         | Contains order information including user, day of week, and order sequence |
-| order_products | Contains products included in each order                                   |
-| products       | Product names and identifiers                                              |
-| aisles         | Product aisle categories                                                   |
-| departments    | Product department categories                                              |
+https://www.kaggle.com/competitions/instacart-market-basket-analysis
 
 ---
 
-# Tools & Technologies Used
+# Business Questions We Will Unravel
 
-SQL (MySQL)
-GitHub for version control
-Data analysis using relational queries
+The analysis aims to answer the following questions:
+
+* How many orders and customers are present in the dataset?
+* What is the average number of orders placed by customers?
+* What is the average basket size (number of products per order)?
+* Which products are ordered the most?
+* Which products have the highest reorder rate?
+* Which product combinations are frequently purchased together?
+* How are customers distributed across different activity levels?
+* On which days of the week are orders most commonly placed?
+* Can we identify customers who have stopped ordering for long periods?
+
+---
+
+# Problem Statement and Objective
+
+Online grocery platforms generate a large amount of transactional data.
+Analyzing this data can help businesses understand customer purchasing behavior and product demand patterns.
+
+The objective of this project is to explore the Instacart dataset using SQL to gain insights into:
+
+* Customer ordering behavior
+* Product popularity
+* Basket composition
+* Reorder patterns
+* Customer activity levels
 
 ---
 
 # Analysis Performed
 
-## 1. Data Validation
+## Data Validation
 
-Verified record counts and ensured dataset integrity across all tables.
+Record counts were checked for all tables to understand the size of the dataset and verify that data was loaded correctly.
 
-## 2. Data Exploration
+## Data Exploration
 
-Examined sample records and explored dataset structure to understand relationships between tables.
+Sample rows from each table were examined to understand the dataset structure and relationships between tables.
 
-## 3. Customer Order Analysis
+## Customer Order Analysis
 
-Analyzed customer ordering behavior including:
+This analysis calculates:
 
-• Total number of orders
-• Number of unique customers
-• Average orders per customer
+* Total number of orders
+* Number of unique customers
+* Average orders per customer
 
-## 4. Basket Size Analysis
+This helps understand overall customer activity on the platform.
 
-Evaluated the number of products purchased in each order to understand customer purchase volume.
+## Basket Size Analysis
 
-Metrics analyzed:
+This analysis calculates the number of products included in each order and measures:
 
-• Average basket size
-• Largest basket size
-• Distribution of products per order
+* Average basket size
+* Largest basket size
+* Orders containing the highest number of products
 
-## 5. Product Popularity Analysis
+## Product Popularity Analysis
 
-Identified the most frequently ordered products across the platform.
+This analysis identifies the most frequently ordered products in the dataset.
 
-This helps businesses understand:
+## Reorder Analysis
 
-• High demand products
-• Inventory planning
-• Product promotion strategies
+This analysis calculates reorder rates for products to understand which products customers frequently purchase again.
 
-## 6. Reorder Behavior Analysis
+## Market Basket Analysis
 
-Measured how frequently customers reorder specific products.
+Products purchased together in the same order were analyzed to identify frequently occurring product pairs.
 
-High reorder rates indicate:
+## Customer Segmentation
 
-• Customer loyalty to specific products
-• Essential grocery items
+Customers were grouped based on the number of orders they placed in order to understand different levels of customer activity.
 
-## 7. Market Basket Analysis
+## Time-Based Order Analysis
 
-Identified product pairs that are frequently purchased together.
+Orders were analyzed by day of the week to observe patterns in when customers place grocery orders.
 
-This insight helps with:
+## Customer Churn Analysis
 
-• Cross-selling strategies
-• Product recommendation engines
-
-## 8. Customer Segmentation
-
-Segmented customers based on purchasing activity and order frequency.
-
-Customer segments include:
-
-• High activity customers
-• Moderate activity customers
-• Low activity customers
-• Inactive customers
-
-This helps businesses identify their most valuable customers.
-
-## 9. Time-Based Order Analysis
-
-Analyzed order distribution across different days of the week to understand customer purchasing patterns.
-
-Insights from this analysis can help with:
-
-• Staffing decisions
-• Marketing campaign timing
-• Inventory management
-
-## 10. Customer Churn Analysis
-
-Identified customers who have not placed orders within a defined time window.
-
-Customers were categorized as:
-
-• Active customers
-• Churned customers
-
-This helps businesses detect customer drop-off patterns and design retention strategies.
+Customers whose last recorded order shows a long gap since their previous purchase were identified as potentially inactive customers.
 
 ---
 
-# Key Insights
+# Insights
 
-• A small number of products account for a large percentage of total orders.
-• Certain product combinations are frequently purchased together, indicating cross-selling opportunities.
-• Some customers place orders significantly more frequently than others, highlighting the importance of loyal customer segments.
-• Reorder behavior is strong for staple grocery items.
-• Customer activity shows variation across different days of the week.
-• A portion of customers become inactive after extended periods without orders.
+Key findings from the analysis are documented in a separate insights file.
+
+Insights File: **insights.md**
 
 ---
 
-# Example Business Applications
+# Recommendations
 
-The insights from this analysis can support several business decisions:
+Based on the analysis, businesses can consider:
 
-• Product recommendation systems
-• Cross-selling strategies
-• Inventory planning
-• Customer loyalty programs
-• Churn prevention strategies
-
----
-
-# Project Structure
-
-```
-instacart-sql-analysis
-│
-├── instacart_analysis.sql
-├── README.md
-└── dataset_link.txt
-```
+* Promoting popular products that customers frequently purchase
+* Using frequently purchased product pairs for cross-selling strategies
+* Targeting highly active customers with loyalty programs
+* Monitoring inactive customers to design retention strategies
 
 ---
+
+# Conclusion
+
+This project explored the Instacart dataset using SQL to analyze customer purchasing behavior and product trends.
+
+Through different analyses such as basket size evaluation, product popularity analysis, reorder behavior, and customer segmentation, the project provides an overview of how customers interact with an online grocery platform.
+
+These insights can help businesses better understand customer activity and product demand patterns.
+
 
 # Author
 
 Gaurav Yadav
 
-Aspiring Data Analyst interested in customer analytics, business intelligence, and data-driven decision making.
-
-GitHub Profile: https://github.com/yourusername
