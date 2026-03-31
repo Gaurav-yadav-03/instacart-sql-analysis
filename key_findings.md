@@ -1,113 +1,98 @@
-# Key Insights from Instacart SQL Analysis
+# Key Insights — Instacart Customer Behavior Analysis
 
-This document summarizes the key findings obtained from the SQL queries performed on the Instacart dataset.
+## SQL Insights
 
----
+### 1. Customer Order Activity
+- Dataset contains over 1 million orders from unique customers
+- Average orders per customer shows strong repeat usage of the platform
+- A small group of highly active customers places a disproportionately 
+  large number of orders
 
-# 1. Customer Order Activity
+### 2. Basket Size
+- Average basket size is 10.09 products per order
+- Some orders contain significantly more items indicating bulk shoppers
+- Most customers place moderate sized orders consistently
 
-The dataset contains a large number of orders placed by customers.
-By analyzing the orders table, the total number of orders and unique customers were identified.
+### 3. Most Ordered Products
+Top products by order count:
+1. Banana
+2. Bag of Organic Bananas
+3. Organic Strawberries
+4. Organic Baby Spinach
+5. Organic Hass Avocado
 
-The analysis also calculated the **average number of orders placed per customer**, which helps understand overall customer engagement on the platform.
+Fresh produce dominates the top ordered products list.
 
----
+### 4. Reorder Behavior
+- 59% of all ordered items are reorders
+- This indicates strong product loyalty and habitual purchasing behavior
+- High reorder products are mostly fresh produce and dairy items
 
-# 2. Basket Size Analysis
+### 5. Market Basket Analysis
+- Frequently purchased product pairs are mostly within the same category
+- Organic produce items are commonly purchased together
+- Cross-selling opportunities exist between produce and dairy departments
 
-Basket size refers to the number of products included in a single order.
+### 6. Customer Segmentation
+Customers segmented by order activity:
+| Segment | Description |
+|---|---|
+| Highly Active | Placed 10 or more orders |
+| Moderately Active | Placed 5 to 9 orders |
+| Low Activity | Placed 2 to 4 orders |
+| Inactive | Placed only 1 order |
 
-The analysis calculated:
+### 7. Order Distribution by Day
+- Sunday and Saturday have the highest order volumes
+- Midweek days (Tuesday, Wednesday, Thursday) have the lowest volumes
+- Weekend shopping behavior is dominant on this platform
 
-* Basket size for each order
-* Average basket size across all orders
-* Orders containing the largest number of products
+### 8. Peak Ordering Hours
+- Peak ordering window is 8am to 3pm
+- Orders drop significantly after 6pm
+- Very few orders placed between midnight and 6am
 
-This helps understand how many items customers typically purchase in one transaction.
-
----
-
-# 3. Most Ordered Products
-
-The product analysis identified the **top 10 most frequently ordered products** in the dataset.
-
-These products appear most often across all orders and represent the items that customers purchase the most.
-
----
-
-# 4. Product Reorder Behavior
-
-Reorder analysis was performed to identify products that customers frequently purchase again.
-
-Products with high reorder rates indicate items that customers consistently buy across multiple orders.
-
----
-
-# 5. Customers with Highest Order Counts
-
-The analysis identified customers who placed the largest number of orders.
-
-This helps highlight the most active users on the platform.
-
----
-
-# 6. Frequently Purchased Product Pairs
-
-Market basket analysis was performed to identify **product pairs that are frequently purchased together in the same order**.
-
-This analysis helps reveal patterns in how products are commonly combined in customer purchases.
-
----
-
-# 7. Products Most Frequently Added First to Cart
-
-By analyzing the `add_to_cart_order` field, the products most frequently added as the first item in the cart were identified.
-
-These products represent items that customers often prioritize when placing orders.
+### 9. Inactive Customer Identification
+- Customers with 30+ days since last order were flagged as potentially inactive
+- This segment represents a churn risk requiring retention campaigns
 
 ---
 
-# 8. Customer Segmentation Based on Order Activity
+## Power BI Dashboard Insights
 
-Customers were segmented based on the number of orders they placed.
+### Page 1 — Executive Overview
+- 1M total orders from 63K unique customers
+- Average basket size of 10.09 items per order
+- 59% reorder rate confirming high customer loyalty
+- Sunday is the busiest day, Thursday the quietest
+- Orders peak at 10am across all days
 
-Segments include:
+### Page 2 — Product Intelligence
+- Produce department accounts for the largest share of orders
+- Banana alone is the most ordered single product in the entire dataset
+- 59% of items are reordered showing customers buy the same products 
+  repeatedly — this is a strong retention signal
 
-* Highly Active Customers
-* Moderately Active Customers
-* Low Activity Customers
-* Inactive Customers
-
-This segmentation helps understand how customer activity is distributed across the platform.
-
----
-
-# 9. Order Distribution by Day of Week
-
-Orders were analyzed based on the day of the week they were placed.
-
-This analysis shows how customer ordering behavior varies across different days.
-
----
-
-# 10. Inactive Customer Identification
-
-Customers whose last recorded order shows a gap of more than 30 days since their previous order were identified.
-
-This helps detect customers who may have become inactive.
+### Page 3 — Customer Behavior
+- Heatmap confirms Sunday and Saturday 8am–2pm is the peak ordering window
+- Most customers return within 7 days showing very high platform retention
+- Customer segmentation scatter plot shows a concentration of customers 
+  with moderate basket sizes and moderate order frequency
+- A small group of high value customers has both large baskets and 
+  high order frequency — ideal targets for loyalty programs
 
 ---
 
-# 11. Customer Churn Analysis
+## Business Recommendations
 
-Customers were categorized as **Active** or **Churned** based on the number of days since their previous order.
-
-This analysis provides an estimate of how many customers may have stopped ordering over time.
+1. Run weekend promotions between 8am and 12pm for maximum reach
+2. Use top reordered products in push notification reminders
+3. Bundle frequently purchased product pairs for cross-sell offers
+4. Launch loyalty program targeting highly active customer segment
+5. Send re-engagement emails to customers inactive for 30+ days
+6. Stock produce department heavily — it drives the most orders
 
 ---
 
-# Summary
-
-The SQL analysis of the Instacart dataset explored customer ordering behavior, product popularity, basket size patterns, and customer activity levels.
-
-These analyses provide a basic understanding of how customers interact with the platform and how products are purchased across orders.
+*Analysis by Gaurav Yadav*
+*Dataset: Kaggle Instacart Market Basket Analysis*
