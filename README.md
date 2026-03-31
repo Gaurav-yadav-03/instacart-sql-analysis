@@ -1,162 +1,153 @@
-# Instacart Customer Behavior Analysis Using SQL
+# Instacart Customer Behavior Analysis — SQL + Power BI
 
 ## Overview
+This project analyzes customer purchasing behavior using the Instacart grocery 
+dataset. The analysis was performed using SQL for data exploration and Power BI 
+for interactive dashboard visualization.
 
-This project analyzes customer purchasing behavior using the Instacart grocery dataset.
-The analysis focuses on understanding order patterns, basket sizes, popular products, reorder behavior, and customer activity levels.
+The project focuses on understanding order patterns, basket sizes, popular 
+products, reorder behavior, and customer activity levels.
 
-Using SQL queries, different aspects of the dataset were explored to identify patterns in how customers interact with the platform.
+## Tools Used
+| Tool | Purpose |
+|---|---|
+| SQL | Data exploration and analysis |
+| Power BI Desktop | Interactive dashboard |
+| DAX | KPI measures and calculations |
+| Kaggle | Dataset source |
+
+## About Instacart
+Instacart is an online grocery delivery and pick-up service that allows 
+customers to order groceries from local stores through a mobile app or website.
+
+## Database Structure
+| Table | Description |
+|---|---|
+| orders | Order info — user ID, day of week, hour of day |
+| order_products | Products included in each order |
+| products | Product names |
+| aisles | Aisle categories |
+| departments | Department categories |
+
+## Business Questions Answered
+1. How many orders and customers are present in the dataset?
+2. What is the average number of orders placed per customer?
+3. What is the average basket size (products per order)?
+4. Which products are ordered the most?
+5. Which products have the highest reorder rate?
+6. Which product combinations are frequently purchased together?
+7. How are customers distributed across activity levels?
+8. On which days and hours are orders most commonly placed?
+9. Which customers have stopped ordering for long periods?
 
 ---
 
-# About Instacart
+## Power BI Dashboard
 
-Instacart is an online grocery delivery and pick-up service that allows customers to order groceries from local stores through a mobile app or website.
+An interactive 3-page dashboard built in Power BI Desktop to visualize 
+findings from the SQL analysis.
 
-Customers can browse products, add items to their cart, and place orders that are fulfilled by personal shoppers. Understanding customer purchasing behavior helps platforms like Instacart improve product recommendations, inventory planning, and customer retention strategies.
+### Dashboard Preview
+[View Full Dashboard PDF](instacart_dashboard.pdf)
 
 ---
 
-# Database Description
+### Page 1 — Executive Overview
+![Page 1](page1-executive-overview.png)
 
-The dataset contains multiple tables that describe customer orders and products.
+**Visuals:**
+- 4 KPI cards — Total Orders, Total Users, Avg Basket Size, Reorder Rate
+- Orders by Day of Week (horizontal bar chart)
+- Orders by Hour of Day (line chart)
+- Interactive slicers — Department filter and Day of Week filter
 
-Tables used in the analysis:
+**Key Insight:** Sunday and Saturday have the highest order volumes. 
+Peak ordering hour is 10am.
 
-| Table          | Description                                                                                |
-| -------------- | ------------------------------------------------------------------------------------------ |
-| orders         | Contains order information including user ID, order number, day of week, and time of order |
-| order_products | Contains products included in each order                                                   |
-| products       | Contains product names                                                                     |
-| aisles         | Contains aisle categories                                                                  |
-| departments    | Contains department categories                                                             |
+---
 
-### Dataset Size
+### Page 2 — Product Intelligence
+![Page 2](Page2-Product-Intelligence.png)
 
-The dataset contains millions of grocery orders placed by customers along with the products included in each order.
+**Visuals:**
+- Orders by Department — Treemap
+- Top 10 Products by Order Count — Bar chart
+- Reorder vs New Items — Donut chart
+
+**Key Insight:** Produce is the largest department. Banana is the 
+single most ordered product. 59% of all items are reorders — 
+indicating strong customer loyalty.
+
+---
+
+### Page 3 — Customer Behavior
+![Page 3](page3-Customer-behviour.png)
+
+**Visuals:**
+- Order Heatmap — Day of Week vs Hour of Day (matrix)
+- Days Between Orders — Return Frequency (column chart)
+- Customer Segmentation — Basket Size vs Order Frequency (scatter plot)
+
+**Key Insight:** Peak ordering window is 8am–3pm on weekends. 
+Most customers reorder within 7 days showing high platform retention.
+
+---
+
+### DAX Measures Used
+```dax
+Total Orders = DISTINCTCOUNT(orders[order_id])
+
+Total Users = DISTINCTCOUNT(orders[user_id])
+
+Avg Basket Size = 
+AVERAGEX(
+    VALUES(order_products[order_id]),
+    CALCULATE(COUNTROWS(order_products))
+)
+
+Reorder Rate = 
+DIVIDE(
+    CALCULATE(COUNTROWS(order_products), 
+    order_products[reordered] = 1),
+    COUNTROWS(order_products)
+)
+
+Avg Orders Per User = 
+DIVIDE([Total Orders], DISTINCTCOUNT(orders[user_id]))
+```
+
+---
+
+## SQL Analysis
 
 ### Dataset Link
+[Instacart Market Basket Analysis — Kaggle](https://www.kaggle.com/competitions/instacart-market-basket-analysis)
 
-Instacart Market Basket Analysis Dataset
-https://www.kaggle.com/competitions/instacart-market-basket-analysis
+### Analysis Performed
+- Data Validation
+- Customer Order Analysis
+- Basket Size Analysis
+- Product Popularity Analysis
+- Reorder Analysis
+- Market Basket Analysis
+- Customer Segmentation
+- Time Based Order Analysis
+- Customer Churn Analysis
 
----
-
-# Business Questions We Will Unravel
-
-The analysis aims to answer the following questions:
-
-* How many orders and customers are present in the dataset?
-* What is the average number of orders placed by customers?
-* What is the average basket size (number of products per order)?
-* Which products are ordered the most?
-* Which products have the highest reorder rate?
-* Which product combinations are frequently purchased together?
-* How are customers distributed across different activity levels?
-* On which days of the week are orders most commonly placed?
-* Can we identify customers who have stopped ordering for long periods?
+### Key Findings
+[View Full Insights](key_findings.md)
 
 ---
 
-# Problem Statement and Objective
-
-Online grocery platforms generate a large amount of transactional data.
-Analyzing this data can help businesses understand customer purchasing behavior and product demand patterns.
-
-The objective of this project is to explore the Instacart dataset using SQL to gain insights into:
-
-* Customer ordering behavior
-* Product popularity
-* Basket composition
-* Reorder patterns
-* Customer activity levels
+## Recommendations
+- Promote top reordered products through push notifications
+- Use frequently purchased product pairs for cross-selling
+- Target highly active customers with loyalty rewards
+- Design re-engagement campaigns for inactive customers
+- Schedule promotions on Sunday and Saturday 8am–12pm for maximum reach
 
 ---
 
-# Analysis Performed
-
-## Data Validation
-
-Record counts were checked for all tables to understand the size of the dataset and verify that data was loaded correctly.
-
-## Data Exploration
-
-Sample rows from each table were examined to understand the dataset structure and relationships between tables.
-
-## Customer Order Analysis
-
-This analysis calculates:
-
-* Total number of orders
-* Number of unique customers
-* Average orders per customer
-
-This helps understand overall customer activity on the platform.
-
-## Basket Size Analysis
-
-This analysis calculates the number of products included in each order and measures:
-
-* Average basket size
-* Largest basket size
-* Orders containing the highest number of products
-
-## Product Popularity Analysis
-
-This analysis identifies the most frequently ordered products in the dataset.
-
-## Reorder Analysis
-
-This analysis calculates reorder rates for products to understand which products customers frequently purchase again.
-
-## Market Basket Analysis
-
-Products purchased together in the same order were analyzed to identify frequently occurring product pairs.
-
-## Customer Segmentation
-
-Customers were grouped based on the number of orders they placed in order to understand different levels of customer activity.
-
-## Time-Based Order Analysis
-
-Orders were analyzed by day of the week to observe patterns in when customers place grocery orders.
-
-## Customer Churn Analysis
-
-Customers whose last recorded order shows a long gap since their previous purchase were identified as potentially inactive customers.
-
----
-
-# Insights
-
-Key findings from the analysis are documented in a separate insights file.
-
-Insights File: **insights.md** <br/>
-https://github.com/Gaurav-yadav-03/instacart-sql-analysis/blob/main/key_findings.md
-
----
-
-# Recommendations
-
-Based on the analysis, businesses can consider:
-
-* Promoting popular products that customers frequently purchase
-* Using frequently purchased product pairs for cross-selling strategies
-* Targeting highly active customers with loyalty programs
-* Monitoring inactive customers to design retention strategies
-
----
-
-# Conclusion
-
-This project explored the Instacart dataset using SQL to analyze customer purchasing behavior and product trends.
-
-Through different analyses such as basket size evaluation, product popularity analysis, reorder behavior, and customer segmentation, the project provides an overview of how customers interact with an online grocery platform.
-
-These insights can help businesses better understand customer activity and product demand patterns.
-
-
-# Author
-
-Gaurav Yadav
-
+## Author
+**Gaurav Yadav**
+[GitHub](https://github.com/Gaurav-yadav-03)
